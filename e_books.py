@@ -18,7 +18,7 @@ links=[]
 src = result.content
 soup = BeautifulSoup(src, 'lxml')
 
-f = open("links.txt", "w")
+f = open("links.txt", "a")
 
 t3 = soup.find_all('nav')[1]
 t3 = t3.find_all('li')
@@ -43,10 +43,9 @@ browser = webdriver.Firefox(profile,executable_path = 'K:\geckodriver-v0.30.0-wi
 with open('links.txt','r') as f:
     link=f.readlines()
     print(len(link))
-    for i in link:
+    for i in link[461:]:
         browser.get(i)
         parent_handle = browser.current_window_handle
-        #time.sleep(40.0)
         linkElem = browser.find_element_by_link_text('Advanced epub')
         linkElem.click()       
         handles = browser.window_handles
