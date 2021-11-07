@@ -46,7 +46,7 @@ with open('links.txt','r') as f:
     for i in link[461:]:
         browser.get(i)
         parent_handle = browser.current_window_handle
-        linkElem = browser.find_element_by_link_text('Advanced epub')
+        linkElem = browser.find_element_by_link_text('Compatible epub')
         linkElem.click()       
         handles = browser.window_handles
         size = len(handles)
