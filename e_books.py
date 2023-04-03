@@ -5,6 +5,7 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
 
 profile = webdriver.FirefoxProfile()
 profile.set_preference('browser.download.folderList', 2) # custom location
@@ -39,14 +40,15 @@ for i in range(1, no_of_pages+1):
         f.write("https://standardebooks.org" + t2[i]['href'] + '\n')
 
 
-browser = webdriver.Firefox(profile,executable_path = 'K:\geckodriver-v0.30.0-win64\geckodriver.exe')
+browser = webdriver.Firefox(profile,executable_path = 'geckodriver-v0.32.2-linux64/geckodriver')
 with open('links.txt','r') as f:
     link=f.readlines()
     print(len(link))
     for i in link:
         browser.get(i)
         parent_handle = browser.current_window_handle
-        linkElem = browser.find_element_by_link_text('Compatible epub')
+        linkElem = browser.find_element(By.LINK_TEXT, "kepub")
+
         linkElem.click()       
         handles = browser.window_handles
         size = len(handles)
