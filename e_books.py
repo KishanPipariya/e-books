@@ -1,17 +1,22 @@
 from bs4 import BeautifulSoup
-import time
+import os
 import requests
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
+import time
 from tqdm import tqdm
 
-profile = webdriver.FirefoxOptions()
-profile.set_preference('browser.download.folderList', 2) # custom location
-profile.set_preference('browser.download.manager.showWhenStarting', False)
-profile.set_preference('browser.download.dir','/tmp')
-profile.set_preference('browser.helperApps.neverAsk.saveToDisk', 'application/octet-stream')
+os.makedirs('ebooks', exist_ok=True)
+
+options = Options()
+# use absolute path for the download directory so Firefox resolves it correctly
+download_dir = os.path.abspath('ebooks')
+options.set_preference('browser.download.folderList', 2) # custom location
+options.set_preference('browser.download.manager.showWhenStarting', False)
+options.set_preference('browser.download.dir', download_dir) # path to download folder
+options.set_preference('browser.helperApps.neverAsk.saveToDisk', 'application/octet-stream')
 
 result = requests.get("https://standardebooks.org/ebooks?page=1&per-page=48")
 
@@ -39,7 +44,7 @@ for i in tqdm(range(1, no_of_pages+1)):
         f.write("https://standardebooks.org" + t2[i]['href'] + '\n')
 
 
-browser = webdriver.Firefox(profile)
+browser = webdriver.Firefox(options=options)
 with open('links.txt','r') as f:
     link=f.readlines()
     print(len(link))

@@ -1,3 +1,5 @@
-links.txt
+.DS_Store
+ebooks
 geckodriver.log
+links.txt
 .venv/
