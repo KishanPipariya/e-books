@@ -2,4 +2,6 @@
 ebooks
 geckodriver.log
 links.txt
+__pycache__/
 .venv/
+__pycache__/
